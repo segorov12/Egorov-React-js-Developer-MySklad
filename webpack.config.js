@@ -2,29 +2,69 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+
+const devMode = process.env.NODE_ENV !== "production";
+const src = path.join(__dirname, 'src');
 
 module.exports = {
     entry: './src/main.js',
+    resolve: {
+        modules: [src, 'node_modules'],
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
+        alias: {
+            src,
+        },
+    },
+    devServer: {
+        hot: true,
+        historyApiFallback: true,
+    },
     module: {
-
         rules: [
             {
+                test: /\.(js)x?$/,
+                loader: require.resolve("babel-loader"),
+                exclude: /node_modules/,
+            },
+            {
                 test: /\.css$/i,
-                include: [
-                    path.resolve(__dirname, 'src')
-                ],
+                exclude: /\.module\.css$/i,
+                include: [src],
                 use: [
-                    'style-loader',
+                    devMode ? "style-loader" : MiniCssExtractPlugin.loader,
                     {
-                        loader: MiniCssExtractPlugin.loader,
+                        loader: "css-loader",
                         options: {
-                            esModule: false
-                        }
-                    },
-                    {
-                        loader: "css-loader"
+                            importLoaders: 1,
+                        },
                     },
                     'postcss-loader'
+                ],
+            },
+            {
+                test: /\.module\.[s]css$/i,
+                include: [src],
+                use: [
+                    devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            importLoaders: 2,
+                            modules: {
+                                localIdentName: '[name]_[local]-[hash:base64:5]',
+                            },
+                            esModule: false
+
+
+
+                            // modules: {
+                            //     localIdentName: '[name]_[local]-[hash:base64:5]',
+                            // }
+                        },
+                    },
+                    'sass-loader',
+                    'postcss-loader',
                 ],
             },
             {
@@ -41,9 +81,9 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./src/index.html",
         }),
-        new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin({
+        ...(devMode ? [] : [new MiniCssExtractPlugin({
             filename: 'css/[name].css',
-        })
+        })]),
+        new CleanWebpackPlugin()
     ]
 };
