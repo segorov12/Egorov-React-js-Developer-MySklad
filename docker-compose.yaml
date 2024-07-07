@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  frontend:
+    build: .
+    volumes:
+      - .:/home/repos/Egorov-React-js-Developer-MySklad
+    ports:
+      - "8080"
+    environment:
+      NODE_ENV: development

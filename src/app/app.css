@@ -1,0 +1,55 @@
+body {
+    height: 100%;
+    margin: 0 20%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 12px 0;
+}
+main {
+    min-height: calc(100vh - 120px);
+}
+footer {
+    width: 100%;
+    text-align: center;
+
+    //styleName: text-xs/font-medium;
+    font-family: Inter;
+    font-weight: 500;
+    line-height: 18px;
+}
+th {
+    color: #6B7280;
+}
+.logo {
+    width: 156px;
+    height: 24px;
+    padding: 0.65px 0.31px 0.17px 0.07px;
+    gap: 0px;
+    opacity: 0px;
+}
+
+.add-data-btn {
+    width: 102px;
+    height: 34px;
+    padding: 2px 3px;
+    gap: 2px;
+    opacity: 0px;
+
+    font-family: Inter;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: left;
+
+}
+
+.add-data-btn > svg {
+    top: 1.6px;
+    margin-left: 10px;
+    gap: 0px;
+    opacity: 0px;
+}
