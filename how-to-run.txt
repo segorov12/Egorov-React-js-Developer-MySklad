@@ -1,5 +1,0 @@
-#Для запуска контейнера с nodejs и подключение volume
-docker-compose run frontend
-#В консоле для запуска сервиса
-npm install (только первый раз)
-npm run serve
