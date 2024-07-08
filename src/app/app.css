@@ -4,16 +4,16 @@ body {
     display: grid;
     grid-template-rows: auto 1fr auto;
 }
-header {
+.header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
     padding: 12px 0;
 }
-main {
+.main {
     min-height: calc(100vh - 120px);
 }
-footer {
+.footer {
     width: 100%;
     text-align: center;
 
